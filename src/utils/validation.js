@@ -9,7 +9,7 @@ export const validateName = (name) => {
   if (validator.isEmpty(name)) {
     return "Field is required";
   }
-  if (!validator.isLength(name, { min: 5, max: 25 })) {
+  if (!validator.isLength(name, { max: 25 })) {
     return "Field should be between 5 and 25 characters";
   }
 };
