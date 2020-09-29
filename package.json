@@ -50,5 +50,8 @@
   },
   "devDependencies": {
     "react-alice-carousel": "^1.19.3"
+  },
+  "engines": {
+    "node": "12.13.1"
   }
 }
