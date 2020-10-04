@@ -2,11 +2,11 @@ import http from "./httpService";
 
 const apiEndPoint = `${process.env.REACT_APP_API_URL}courses`;
 
-export const getCourses = () => {
+export const fetchCourses = () => {
   return http.get(`${apiEndPoint}/me`);
 };
 
-export const getCourse = (id) => {
+export const fetchCourse = (id) => {
   return http.get(`${apiEndPoint}/${id}`);
 };
 

@@ -35,7 +35,6 @@ class SignUpForm extends CustomForm {
       window.location = TO_HOME;
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
         const errors = { ...this.state.errors };
         errors.email = ex.response.data;
         this.setState({ errors });

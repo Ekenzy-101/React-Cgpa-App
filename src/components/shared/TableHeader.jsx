@@ -1,47 +1,41 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
+import { CourseContext } from "../../context";
 
-class TableHeader extends Component {
-  raiseSort = (path) => {
-    const sortColumn = { ...this.props.sortColumn };
-    if (sortColumn.path === path)
-      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+const TableHeader = () => {
+  const { columns, sortColumn, onSort } = useContext(CourseContext);
+
+  const raiseSort = (path) => {
+    const newSortColumn = { ...sortColumn };
+    if (newSortColumn.path === path)
+      newSortColumn.order = newSortColumn.order === "asc" ? "desc" : "asc";
     else {
-      sortColumn.path = path;
-      sortColumn.order = "asc";
+      newSortColumn.path = path;
+      newSortColumn.order = "asc";
     }
-    this.props.onSort(sortColumn);
+    onSort(newSortColumn);
   };
 
-  renderSortIcon = (column) => {
-    const { sortColumn } = this.props;
+  const renderSortIcon = (column) => {
     if (column.path !== sortColumn.path) return null;
     if (sortColumn.order === "asc") return <i className="fas fa-sort-up"></i>;
     return <i className="fas fa-sort-down"></i>;
   };
 
-  render() {
-    return (
-      <thead>
-        <tr>
-          {this.props.columns.map((column) => (
-            <th
-              key={column.path || column.key}
-              onClick={column.path && (() => this.raiseSort(column.path))}
-              className="clickable"
-            >
-              {column.label} {this.renderSortIcon(column)}
-            </th>
-          ))}
-        </tr>
-      </thead>
-    );
-  }
-}
-
-TableHeader.propTypes = {
-  sortColumn: PropTypes.object.isRequired,
-  columns: PropTypes.array.isRequired,
-  onSort: PropTypes.func.isRequired,
+  return (
+    <thead>
+      <tr>
+        {columns.map((column) => (
+          <th
+            key={column.path || column.key}
+            onClick={column.path && (() => raiseSort(column.path))}
+            className="clickable"
+          >
+            {column.label} {renderSortIcon(column)}
+          </th>
+        ))}
+      </tr>
+    </thead>
+  );
 };
+
 export default TableHeader;

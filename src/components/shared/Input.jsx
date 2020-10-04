@@ -28,8 +28,6 @@ const Input = ({ name, label, error, validate, onChange, onBlur, ...rest }) => {
 Input.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
   validate: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,

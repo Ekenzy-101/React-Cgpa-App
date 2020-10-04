@@ -1,10 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
 import Score from "./shared/Score";
 import SearchBox from "./shared/SearchBox";
 import Select from "./shared/Select";
+import { CourseContext } from "../context";
 
-const FilterGroup = ({ levels, level, onChange, searchQuery, sgpa, cgpa }) => {
+const FilterGroup = () => {
+  const { levels, level, onChange, searchQuery, sgpa, cgpa } = useContext(
+    CourseContext
+  );
+
   return (
     <div className="filter-container px-3">
       <Select
@@ -26,15 +30,6 @@ const FilterGroup = ({ levels, level, onChange, searchQuery, sgpa, cgpa }) => {
       </div>
     </div>
   );
-};
-
-FilterGroup.propTypes = {
-  levels: PropTypes.array.isRequired,
-  level: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  searchQuery: PropTypes.string.isRequired,
-  sgpa: PropTypes.string.isRequired,
-  cgpa: PropTypes.string.isRequired,
 };
 
 export default FilterGroup;

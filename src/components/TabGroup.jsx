@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import PropTypes from "prop-types";
 import CustomTable from "./shared/Table";
+import { CourseContext } from "../context";
 
-const TabGroup = ({ onSemesterSelect, semesters, ...rest }) => {
+const TabGroup = () => {
+  const { onSemesterSelect, semesters, data } = useContext(CourseContext);
   return (
     <div className="tab-container">
       <Tabs
@@ -14,22 +15,13 @@ const TabGroup = ({ onSemesterSelect, semesters, ...rest }) => {
         {semesters.map((value) => (
           <Tab key={value} eventKey={value} title={`${value} Semester`}>
             <div>
-              <CustomTable {...rest} />
+              <CustomTable data={data} />
             </div>
           </Tab>
         ))}
       </Tabs>
     </div>
   );
-};
-
-TabGroup.propTypes = {
-  onSemesterSelect: PropTypes.func.isRequired,
-  semesters: PropTypes.array.isRequired,
-  data: PropTypes.array.isRequired,
-  columns: PropTypes.array.isRequired,
-  sortColumn: PropTypes.object.isRequired,
-  onSort: PropTypes.func.isRequired,
 };
 
 export default TabGroup;

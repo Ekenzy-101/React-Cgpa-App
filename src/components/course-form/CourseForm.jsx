@@ -8,6 +8,7 @@ import {
 } from "../../utils/validation";
 import { Form } from "react-bootstrap";
 import { TO_HOME } from "../../utils/constant";
+import { toast } from "react-toastify";
 
 class CourseForm extends CustomForm {
   state = {
@@ -29,7 +30,7 @@ class CourseForm extends CustomForm {
   componentDidMount() {
     const { course } = this.props;
 
-    if (typeof course === "object") {
+    if (course) {
       this.setState({ data: course, errors: {} });
     }
   }
@@ -40,7 +41,7 @@ class CourseForm extends CustomForm {
       await saveCourse(course);
       window.location = TO_HOME;
     } catch (ex) {
-      console.log(ex);
+      toast.error("An Unexpected Error Occured");
     }
   };
 

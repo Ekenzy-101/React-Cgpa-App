@@ -3,14 +3,7 @@ import { TOKEN_KEY } from "../utils/constant";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-  headers: {
-    common: {
-      "Access-Control-Allow-Origin": "*",
-    },
-  },
 });
-
-inst;
 
 instance.defaults.headers.common["x-auth-token"] = localStorage.getItem(
   TOKEN_KEY
