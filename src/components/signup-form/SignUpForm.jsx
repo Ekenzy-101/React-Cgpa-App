@@ -9,63 +9,59 @@ import {
   validateName,
   validatePassword,
 } from "../../utils/validation";
-import CustomForm from "../shared/Form";
+import useForm from "../shared/hooks/useForm";
 
-class SignUpForm extends CustomForm {
-  state = {
-    data: {
-      firstname: "",
-      lastname: "",
+const SignUpForm = (props) => {
+  const {
+    renderButton,
+    renderInput,
+    handleSubmit,
+    data,
+    errors,
+    setErrors,
+  } = useForm(
+    {
       password: "",
       email: "",
-    },
-    errors: {
       firstname: "",
       lastname: "",
+    },
+    {
       password: "",
       email: "",
-    },
-  };
+      firstname: "",
+      lastname: "",
+    }
+  );
 
-  doSubmit = async () => {
+  const doSubmit = async () => {
     try {
-      const { data } = this.state;
       const { headers } = await register(data);
       loginWithJwt(headers["x-auth-token"]);
       window.location = TO_HOME;
     } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        const errors = { ...this.state.errors };
-        errors.email = ex.response.data;
-        this.setState({ errors });
-      }
+      if (ex.response && ex.response.status === 400)
+        setErrors({ ...errors, email: ex.response.data });
     }
   };
 
-  render() {
-    return (
-      <>
-        <h3 className="text-center">Sign Up</h3>
-        <Form onSubmit={this.handleSubmit}>
-          {this.renderInput("firstname", "Firstname", validateName)}
-          {this.renderInput("lastname", "Lastname", validateName)}
-          {this.renderInput("email", "Email", validateEmail, "email")}
-          {this.renderInput(
-            "password",
-            "Password",
-            validatePassword,
-            "password"
-          )}
-          {this.renderButton("SIGN UP")}
-          <Form.Group>
-            <p className="text-center">
-              Have An Account Already? <Link to={TO_LOGIN}>Login</Link>
-            </p>
-          </Form.Group>
-        </Form>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <h3 className="text-center">Sign Up</h3>
+      <Form onSubmit={(e) => handleSubmit(doSubmit, e)}>
+        {renderInput("firstname", "Firstname", validateName)}
+        {renderInput("lastname", "Lastname", validateName)}
+        {renderInput("email", "Email", validateEmail, "email")}
+        {renderInput("password", "Password", validatePassword, "password")}
+        {renderButton("SIGN UP")}
+        <Form.Group>
+          <p className="text-center">
+            Have An Account Already? <Link to={TO_LOGIN}>Login</Link>
+          </p>
+        </Form.Group>
+      </Form>
+    </>
+  );
+};
 
 export default SignUpForm;

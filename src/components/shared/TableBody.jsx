@@ -3,7 +3,7 @@ import _ from "lodash";
 import { CourseContext } from "../../context";
 
 const TableBody = () => {
-  const { courses: data, columns } = useContext(CourseContext);
+  const { data, columns } = useContext(CourseContext);
 
   const renderCell = (item, column) => {
     if (column.content) return column.content(item);
